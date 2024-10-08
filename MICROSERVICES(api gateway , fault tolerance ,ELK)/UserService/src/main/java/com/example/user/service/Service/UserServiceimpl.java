@@ -31,6 +31,9 @@ public class UserServiceimpl implements UserService{
     @Autowired
     private HotelService hotelService;
 
+   // @Autowired
+   // private WebClient.Builder webClientBuilder;
+
         private Logger logger = LoggerFactory.getLogger(UserServiceimpl.class);
 
     @Override
@@ -49,6 +52,18 @@ public class UserServiceimpl implements UserService{
 
         Rating[] ratingsofusers = restTemplate.getForObject("http://RATINGSERVICE/ratings/users/"+user.getUserId(), Rating[].class);
         logger.info("{}",ratingsofusers); //print
+
+//        (fetch data using webclient)
+//         Fetch ratings using WebClient
+//        Mono<Rating[]> ratingMono = webClientBuilder.build()
+//                .get()
+//                .uri("http://RATINGSERVICE/ratings/users/" + user.getUserId())
+//                .retrieve()
+//                .bodyToMono(Rating[].class);
+//
+//        Rating[] ratingsofusers = ratingMono.block(); // Blocking call (for learning; async is better in production)
+//        logger.info("{}", ratingsofusers);
+
 
         //convert [] into list
         List<Rating> ratings = Arrays.stream(ratingsofusers).toList();
